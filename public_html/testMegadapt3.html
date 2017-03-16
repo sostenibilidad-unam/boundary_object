@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+}
+
+.background path {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+}
+
+.foreground path {
+  fill: none;
+  stroke: steelblue;
+}
+
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  
+} 
+  
+* {margin: 0; padding: 0;}
+
+
+#map1 {width: 100%; height: 100%;}
+
+
+  
+
+
+</style>
+<html>
+  <head>
+    <title>GeoServer Test</title>
+    <link rel="stylesheet" href="./OpenLayers/ol.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="d3.parcoords.css">
+    
+    <script src="./OpenLayers/ol.js"></script>
+    
+    
+  </head>
+  <body>
+    <div id="map" ></div>
+	   
+    <script>
+	function useapi(){
+	    document.getElementById("map").innerHTML = pyapi.add(3,4);
+	}
+	function refresh() {
+	    document.getElementById("graph").innerHTML = "hola2";
+	    agebs.getSource().updateParams({"time": Date.now()});
+	    
+	}
+	
+    	var agebs = new ol.layer.Tile({
+	   
+	    source: new ol.source.TileWMS(/** @type {olx.source.TileWMSOptions} */ ({
+	      url: 'http://localhost/geoserver/megadapt/wms',
+	      params: {'LAYERS': 'megadapt:agebs_calles_geo', 'TILED': true},
+	      serverType: 'geoserver'
+	    }))
+	  });
+
+	var agebs2 = new ol.layer.Tile({
+	   
+	    source: new ol.source.TileWMS(/** @type {olx.source.TileWMSOptions} */ ({
+	      url: 'http://localhost/geoserver/megadapt/wms',
+	      params: {'LAYERS': 'megadapt:agebs_df_geo', 'TILED': true},
+	      serverType: 'geoserver'
+	    
+	    })),
+	   opacity: 0.5	
+           
+	  });
+	
+	var raster = new ol.layer.Tile({
+      		source: new ol.source.OSM()
+    	});
+     
+	
+	
+
+        var stamenLayer = new ol.layer.Tile({
+        source: new ol.source.Stamen({
+          layer: 'terrain'
+	  })
+        });
+        
+     	var yoNoFui = false
+ 
+    	var map = new ol.Map({
+     		projection:"EPSG:4326",
+     		layers: [stamenLayer, agebs2],
+     		target: 'map',
+     		view: new ol.View({
+	       		center: ol.proj.fromLonLat([-99.15,19.36]),
+	       		zoom: 11
+      		})
+     	});
+
+	map.getView().on('propertychange', function(e) {
+	   switch (e.key) {
+	      case 'resolution':
+		if (yoNoFui == false){
+		    pyapi.reZoomSisters(e.target.get(e.key));
+		    
+		}
+		break;
+		
+		
+	   }
+	});
+	map.getView().on('propertychange', function(e) {
+	   switch (e.key) {
+	      case 'center':
+		if (yoNoFui == false){
+		    pyapi.rePanSisters(e.target.get(e.key)[0],e.target.get(e.key)[1]);
+		    
+		}
+		break;
+	   }
+	});
+	
+	function reZoom(resolution){
+	    window.yoNoFui = true;
+	    map.getView().setResolution(resolution);
+	    window.yoNoFui = false;
+	}
+	function rePan(x,y){
+	    window.yoNoFui = true;
+	    map.getView().setCenter([x,y]);
+	    window.yoNoFui = false;
+	}
+    	function cambiacapa() {
+
+	    map.removeLayer(agebs)
+	    map.addLayer(agebs2)
+	}
+	function cambiacapa2() {
+
+	    map.removeLayer(agebs2)
+	    map.addLayer(agebs)
+	}
+	// Activate the library
+	//var olGM = new olgm.OLGoogleMaps({map: map});
+	//olGM.activate();
+	
+    	
+    </script>
+    
+    
+    
+  </body>
+</html>
