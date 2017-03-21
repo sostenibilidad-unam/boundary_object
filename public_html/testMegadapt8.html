@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+}
+
+.background path {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+}
+
+.foreground path {
+  fill: none;
+  stroke: steelblue;
+}
+
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  
+} 
+  
+* {margin: 0; padding: 0;}
+
+
+#map1 {width: 100%; height: 100%;}
+
+
+#container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#map{
+
+width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#legend {
+  width: 50px;
+  height: 80px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#legend {
+  z-index: 10;
+}
+#info {
+  width: 50px;
+  height: 80px;
+  position: absolute;
+  top: 50%;
+  right: 140px;
+}
+#info {
+  z-index: 10;
+}
+#fecha {
+  width: 50px;
+  height: 80px;
+  position: absolute;
+  top: 50px;
+  right: 50%;
+}
+#fecha {
+  z-index: 10;
+}
+  
+
+
+</style>
+<html>
+  <head>
+    <title>GeoServer Test</title>
+    <link rel="stylesheet" href="./OpenLayers/ol.css" type="text/css">
+   
+    
+    <script src="./OpenLayers/ol.js"></script>
+    <script src="jquery-3.2.0.js"></script>
+
+    <script src="infra_c0.js"></script>
+  
+  </head>
+  <body>
+
+
+    <div id="map" ></div>
+    <div id="legend"></div>
+    <div id="info"></div>
+    <div id="fecha"></div>  
+        
+    <script>
+	var webber_cuts = [0,60,120,180,240,300]; 
+	var paleta = ['rgba(255,255,178,1.0)', 'rgba(254,204,92,1.0)', 'rgba(253,141,60,1.0)', 'rgba(240,59,32,1.0)', 'rgba(189,0,38,1.0)'];
+	var borde = 'rgba(255,255,255,1.0)';
+	var numberOfFrames = 19;
+	function setup(){
+		
+	     pyapi.setWebberCuts(webber_cuts[0],webber_cuts[1],webber_cuts[2],webber_cuts[3],webber_cuts[4]);
+	     pyapi.setPaleta(paleta);
+	     pyapi.setBorde(borde);
+	     pyapi.setNumberOfFrames(numberOfFrames);
+	}
+	var size = 0;
+
+	var styleCache_infra_c0={}
+	var style_infra_c0 = function(feature, resolution){
+	    var ranges_infra_c0 = [[webber_cuts[0], webber_cuts[1], [ new ol.style.Style({
+					stroke: new ol.style.Stroke({color: paleta[0], lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}), 
+					})]],
+				    [webber_cuts[1], webber_cuts[2], [ new ol.style.Style({
+					stroke: new ol.style.Stroke({color: paleta[1], lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}), 
+					})]],
+				    [webber_cuts[2], webber_cuts[3], [ new ol.style.Style({
+					stroke: new ol.style.Stroke({color: paleta[2], lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}), 
+					})]],
+				    [webber_cuts[3], webber_cuts[4], [ new ol.style.Style({
+					stroke: new ol.style.Stroke({color: paleta[3], lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}), 
+					})]],
+				    [webber_cuts[4], webber_cuts[5], [ new ol.style.Style({
+					stroke: new ol.style.Stroke({color: paleta[4], lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}), 
+					fill: new ol.style.Fill({color: paleta[4]})
+	    			    })]]];
+
+	    var context = {feature: feature,variables: {}};
+	    campo = currentStep + 1
+	    var value = feature.get("t"+campo);
+	    var style = ranges_infra_c0[0][2];
+	    for (i = 0; i < ranges_infra_c0.length; i++){
+		var range = ranges_infra_c0[i];
+		if (value > range[0] && value<=range[1]){
+		    style =  range[2];
+		}
+	    };
+	    if ("" !== null) {
+		var labelText = String("");
+	    } else {
+		var labelText = ""
+	    }
+	    var key = value + "_" + labelText
+
+	    if (!styleCache_infra_c0[key]){
+		var text = new ol.style.Text({
+		      font: '14.3px \'Ubuntu\', sans-serif',
+		      text: labelText,
+		      textBaseline: "center",
+		      textAlign: "left",
+		      offsetX: 5,
+		      offsetY: 3,
+		      fill: new ol.style.Fill({
+		        color: 'rgba(0, 0, 0, 255)'
+		      }),
+		    });
+		styleCache_infra_c0[key] = new ol.style.Style({"text": text})
+	    }
+	    var allStyles = [styleCache_infra_c0[key]];
+	    allStyles.push.apply(allStyles, style);
+	    return allStyles;
+	};
+	var format_infra_c0 = new ol.format.GeoJSON();
+	var features_infra_c0 = format_infra_c0.readFeatures(geojson_infra_c0, 
+		    {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+	var jsonSource_infra_c0 = new ol.source.Vector({
+	    attributions: [new ol.Attribution({html: '<a href=""></a>'})],
+	});
+	jsonSource_infra_c0.addFeatures(features_infra_c0);
+	var lyr_infra_c0 = new ol.layer.Vector({
+		        source:jsonSource_infra_c0, 
+		        style: style_infra_c0,
+		        title: "infra_c",
+	   		opacity: 0.7	
+		    });
+
+	var map, sld, vectorLayer
+	
+	function setStep(step){
+	    currentStep = step;
+	    year = 2016 + step;
+	    document.getElementById("fecha").innerHTML = "<h1>"+year+"</h1>";
+	    lyr_infra_c0.setStyle(style_infra_c0);
+	    lyr_infra_c0.redraw();
+	    
+	}
+	function setIntervals(cuts){
+	    webber_cuts = cuts;
+	    lyr_infra_c0.setStyle(style_infra_c0);
+	    lyr_infra_c0.redraw();
+	    
+	}
+	
+	function refresh() {
+	    document.getElementById("graph").innerHTML = "hola2";
+	    agebs.getSource().updateParams({"time": Date.now()});
+	    
+	}
+	var currentStep = 0
+	var ageb = [];
+	
+        
+	
+        var stamenLayer = new ol.layer.Tile({
+				source: new ol.source.Stamen({
+				layer: 'terrain'
+			})
+        });
+        
+     	var yoNoFui = false;
+	
+
+    	map = new ol.Map({
+     		projection:"EPSG:4326",
+     		layers: [stamenLayer],
+     		target: 'map',
+     		view: new ol.View({
+	       		center: ol.proj.fromLonLat([-99.15,19.36]),
+	       		zoom: 11
+      		})
+     	});
+	
+	vectorLayer = new ol.layer.Vector({
+	    source: new ol.source.Vector({
+		format: new ol.format.GeoJSON(),
+		url: 'infra.json'
+	    })
+	});
+	
+	map.addLayer(lyr_infra_c0);
+
+	var highlightStyleCache = {};
+ 	var featureOverlay = new ol.layer.Vector({
+		source: new ol.source.Vector(),
+		map: map,
+		style: function (feature, resolution) {
+		    var text = resolution * 100000 < 10 ? feature.get('text') : '';
+		    if (!highlightStyleCache[text]) {
+		        highlightStyleCache[text] = new ol.style.Style({
+		            stroke: new ol.style.Stroke({
+		                color: '#000066',
+		                width: 2
+		            }),
+		            fill: new ol.style.Fill({
+		                color: 'rgba(192,192,192,0.7)'
+		            }),
+		            text: new ol.style.Text({
+		                font: '12px Calibri,sans-serif',
+		                text: text,
+		                fill: new ol.style.Fill({
+		                    color: '#000'
+		                }),
+		                stroke: new ol.style.Stroke({
+		                    color: '#f00',
+		                    width: 3
+		                })
+		            })
+		        });
+		    }
+		    return highlightStyleCache[text];
+		}
+	    });
+
+	var highlight;
+	var displayFeatureInfo = function (pixel) {
+
+	var feature = map.forEachFeatureAtPixel(pixel, function (feature) {
+		    return feature;
+	});
+
+	var info = document.getElementById('info');
+		if (feature) {
+		    info.innerHTML = 'ageb_id : ' + feature.get('ageb_id');
+		} else {
+		    info.innerHTML = '&nbsp;';
+		}
+
+	if (feature !== highlight) {
+		    if (highlight) {
+		        featureOverlay.getSource().removeFeature(highlight);
+		    }
+		    if (feature) {
+		        featureOverlay.getSource().addFeature(feature);
+		    }
+		    highlight = feature;
+		}
+
+	    };
+
+
+	map.on('pointermove', function(evt) {
+	    if (evt.dragging) {
+	      return;
+	    }
+	    var pixel = map.getEventPixel(evt.originalEvent);
+	    displayFeatureInfo(pixel);
+	  });
+	map.on('click', function(evt) {
+	  displayFeatureInfo(evt.pixel);
+	});
+ 
+	
+
+	map.getView().on('propertychange', function(e) {
+	   switch (e.key) {
+	      case 'resolution':
+		if (yoNoFui == false){
+		    pyapi.reZoomSisters(e.target.get(e.key));
+		    
+		}
+		break;
+		
+		
+	   }
+	});
+	map.getView().on('propertychange', function(e) {
+	   switch (e.key) {
+	      case 'center':
+		if (yoNoFui == false){
+		    pyapi.rePanSisters(e.target.get(e.key)[0],e.target.get(e.key)[1]);
+		    
+		}
+		break;
+	   }
+	});
+	
+	function reZoom(resolution){
+	    window.yoNoFui = true;
+	    map.getView().setResolution(resolution);
+	    window.yoNoFui = false;
+	}
+	function rePan(x,y){
+	    window.yoNoFui = true;
+	    map.getView().setCenter([x,y]);
+	    window.yoNoFui = false;
+	}
+    	function cambiacapa() {
+
+	    map.removeLayer(agebs);
+	    map.addLayer(agebs2);
+	}
+	function cambiacapa2() {
+
+	    map.removeLayer(agebs2);
+	    map.addLayer(agebs);
+	}
+	
+	
+    	
+    </script>
+    
+    
+    
+  </body>
+</html>
