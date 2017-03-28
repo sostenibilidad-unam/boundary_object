@@ -3,11 +3,12 @@ from pprint import pprint
 from PySide.QtCore import *
 from PySide.QtCore import Qt
 from PySide.QtGui import *
-from PySide import QtWebKit, QtCore, QtGui
+from PySide import QtCore, QtGui
 from PySide.QtCore import QObject, QUrl, Slot
 import csv
 import sys
 import json
+from PySide.QtWebKit import *
 
 #=SI(IZQUIERDA(E2;1)="9";CONCATENAR("0";E2);E2)
 import controlador
@@ -51,11 +52,29 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
         self.setupUi(self)
+        estaImagen = QImage("Logotipos_Tablero_de_Control_Megadapt.png") 
+        sample_palette = QPalette() 
+        sample_palette.setColor(QPalette.Window, Qt.white)
+        sample_palette.setColor(QPalette.WindowText, Qt.blue)
         
-        self.CarpetaMapas="Z:/PlataformaAbril/"
+        self.frame_7.setAutoFillBackground(True)
+        self.frame_7.setPalette(sample_palette)
+        
+        
+        try:   
+            self.logos.setPixmap(QPixmap.fromImage(estaImagen)) 
+        
+        except:
+            print("no pude") 
+        
         self.pantallaActivaIndex=0
         self.fechaSlider.valueChanged.connect(self.ponFecha)
         self.fpSlider.valueChanged.connect(self.ponFp)
+        self.groupsOfTimeSisters = []
+        self.groupsOfSpaceSisters = []
+        
+        self.satellite.clicked.connect(self.ponSatelite)
+        self.calles.clicked.connect(self.ponCalles)
         
         self.P1.clicked.connect(lambda: self.activaPantalla(0))
         self.P2.clicked.connect(lambda: self.activaPantalla(1))
@@ -129,10 +148,11 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         
     def ponFp(self,valor):
         fp = float(valor) / 10.0
-        cuts = self.bojorquezSerrano(fp,maximo=300.0)##aqui esta mal
+        cuts = self.bojorquezSerrano(fp,maximo=self.pantallaActiva.api.maximo)##aqui esta mal
+        print(str(cuts))
         self.pantallaActiva.webFrame.evaluateJavaScript("setIntervals("+str(cuts)+");") 
         self.pantallaActiva.currentFp = valor
-        labelCuts = self.bojorquezSerrano(fp,maximo=300.0)
+        labelCuts = self.bojorquezSerrano(fp,maximo=330.0)
         self.c1.setGeometry(10,10,labelCuts[1],24)
         self.c2.setGeometry(10+labelCuts[1],10,labelCuts[2]-labelCuts[1],24)
         self.c3.setGeometry(10+labelCuts[2],10,labelCuts[3]-labelCuts[2],24)
@@ -154,10 +174,19 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
             corte = anterior + fp ** i * cachito
             cut.append(corte)
     
-        return cut    
+        return cut 
+    
+    def setSpaceSisterhood(self,listaDeHermanas):
+        for hermana in listaDeHermanas:
+            susHermanasEnNumero = self.settingsPantallas[int(hermana)-1]['spaceSisters']
+            susHermanas = []
+            for hermanaNumero in susHermanasEnNumero:
+                susHermanas.append(self.pantalla[hermanaNumero].webFrame)
+                
+            self.pantalla[int(hermana)-1].api.addSpacialSisters(susHermanas)   
         
     def setSpaceSisters(self):
-        print "vinculando pantallas " + self.hermanasDeEspacio.text() + " espacialmente"
+        print ("vinculando pantallas " + self.hermanasDeEspacio.text() + " espacialmente")
         listaDeHermanas = self.hermanasDeEspacio.text().split(",")
         for hermana in listaDeHermanas:
             self.settingsPantallas[int(hermana)-1]['spaceSisters'] = []
@@ -165,29 +194,14 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
                 if not sister == hermana:
                     self.settingsPantallas[int(hermana)-1]['spaceSisters'].append(int(sister)-1)
                     
-        for hermana in listaDeHermanas:
-            susHermanasEnNumero = self.settingsPantallas[int(hermana)-1]['spaceSisters']
-            susHermanas = []
-            for hermanaNumero in susHermanasEnNumero:
-                susHermanas.append(self.pantalla[hermanaNumero].webFrame)
-                
-            self.pantalla[int(hermana)-1].api.addSpacialSisters(susHermanas)
+        self.setSpaceSisterhood(listaDeHermanas)
         
                     
         
         
-        print self.settingsPantallas
+        print (self.settingsPantallas)
     
-    
-    def setTimeSisters(self):
-        print "vinculando pantallas " + self.hermanasDeTiempo.text() + " temporalmente"
-        listaDeHermanas = self.hermanasDeTiempo.text().split(",")
-        for hermana in listaDeHermanas:
-            self.settingsPantallas[int(hermana)-1]['timeSisters'] = []
-            for sister in listaDeHermanas:
-                if not sister == hermana:
-                    self.settingsPantallas[int(hermana)-1]['timeSisters'].append(int(sister)-1)
-                    
+    def setTimeSisterhood(self, listaDeHermanas):
         for hermana in listaDeHermanas:
             susHermanasEnNumero = self.settingsPantallas[int(hermana)-1]['timeSisters']
             susHermanas = []
@@ -195,76 +209,92 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
                 susHermanas.append(self.pantalla[hermanaNumero].webFrame)
                 
             self.pantalla[int(hermana)-1].api.addTemporalSisters(susHermanas)
+    
+    def setTimeSisters(self):
+        print ("vinculando pantallas " + self.hermanasDeTiempo.text() + " temporalmente")
+        listaDeHermanas = self.hermanasDeTiempo.text().split(",")
+        for hermana in listaDeHermanas:
+            self.settingsPantallas[int(hermana)-1]['timeSisters'] = []
+            for sister in listaDeHermanas:
+                if not sister == hermana:
+                    self.settingsPantallas[int(hermana)-1]['timeSisters'].append(int(sister)-1)
+                    
+        self.setTimeSisterhood(listaDeHermanas)
         
                     
         
         
-        print self.settingsPantallas
+        print (self.settingsPantallas)
         
     
     def removeSpaceSisterhood(self):
         self.hermanasDeEspacio.setText("")
-        print "desvinculando pantallas"
+        print ("desvinculando pantallas")
         for i in range(0, self.numeroDePantallas):
             self.pantalla[i].api.spatial_sisters = []
             self.settingsPantallas[i]['spaceSisters'] = []
     
     def removeTimeSisterhood(self):
         self.hermanasDeTiempo.setText("")
-        print "desvinculando pantallas"
+        print ("desvinculando pantallas")
         for i in range(0, self.numeroDePantallas):
             self.pantalla[i].api.temporal_sisters = []
             self.settingsPantallas[i]['timeSisters'] = []
     
     def ponGeometria(self,p,offsetX,offsetY):
         self.pantalla[p].setGeometry(1920+(p*1920)+offsetX,offsetY,1920,1080)
+        
+    def setSisterhoods(self):
+#  esto es para reestablecer los sisterhoods                
+        print(self.groupsOfTimeSisters) 
+        print(self.groupsOfSpaceSisters)     
+         
+        for groupOfSisters in self.groupsOfTimeSisters:
+            self.setTimeSisterhood(groupOfSisters)  
+        for groupOfSisters in self.groupsOfSpaceSisters:
+            self.setSpaceSisterhood(groupOfSisters)
     
     def ajustaSliders(self, sender, earg):##esta es la funcion handler del evento del api de cada pantalla que se activa cuando se carga para obtener informacion de la serie web (nFrames y paleta)
-        print 'foo! '+str(sender.numberOfFrames)
+        print ('foo! '+str(sender.numberOfFrames))
         nFrames = sender.numberOfFrames
-        self.settingsPantallas[self.pantallaActivaIndex]['numberOfFrames'] = nFrames
+        self.settingsPantallas[earg]['numberOfFrames'] = nFrames
         self.fechaSlider.setMaximum (nFrames)
         self.fechaSlider.setMinimum(1) 
         self.fechaSlider.setValue(1)
+        self.pantalla[earg].paleta = sender.paleta#si la paleta es vacia??
+        if len(sender.paleta) > 0:
+            #print (str(sender.paleta))
+            self.setWebberPaleta(earg)
+        self.cargando[earg] = False
+        if self.guion == True:
+            self.ponSiguienteSerieWeb()
         
-        
-        
-        
-#         self.pantallaActiva.view.page().setViewportSize(QSize(200,100))
-#         # render image
-#         image = QImage(self.pantallaActiva.view.page().viewportSize(), QImage.Format_ARGB32_Premultiplied)
-#         painter = QPainter(image)
-#         self.pantallaActiva.webFrame.render(painter)
-#         painter.end()
-#         miPixMap = QPixmap()
-#         miPixMap.convertFromImage(image)
-#         
-#         self.label_2.setPixmap(miPixMap )
-        
-        self.pantallaActiva.paleta = sender.paleta#si la paleta es vacia??
-        print str(sender.paleta)
-        self.setWebberPaleta()
-        
-        
-    def setWebberPaleta(self):
+        if True in self.cargando:
+            print(str(earg)+" ya, pero faltan")
+        else:
+            print("todos ya")
+            self.setSisterhoods()
+
+            
+    def setWebberPaleta(self, p):
         alpha  = 255
-        p_chunk = self.pantallaActiva.paleta[0].split("(")[1].split(",")
+        p_chunk = self.pantalla[p].paleta[0].split("(")[1].split(",")
         color  = QtGui.QColor(int(p_chunk[0]),int(p_chunk[1]),int(p_chunk[2]))
         values = "{r}, {g}, {b}, {a}".format(r = color.red(), g = color.green(), b = color.blue(), a = alpha)
         self.c1.setStyleSheet("QLabel { background-color: rgba("+values+"); }")
-        p_chunk = self.pantallaActiva.paleta[1].split("(")[1].split(",")
+        p_chunk = self.pantalla[p].paleta[1].split("(")[1].split(",")
         color  = QtGui.QColor(int(p_chunk[0]),int(p_chunk[1]),int(p_chunk[2]))
         values = "{r}, {g}, {b}, {a}".format(r = color.red(), g = color.green(), b = color.blue(), a = alpha)
         self.c2.setStyleSheet("QLabel { background-color: rgba("+values+"); }")
-        p_chunk = self.pantallaActiva.paleta[2].split("(")[1].split(",")
+        p_chunk = self.pantalla[p].paleta[2].split("(")[1].split(",")
         color  = QtGui.QColor(int(p_chunk[0]),int(p_chunk[1]),int(p_chunk[2]))
         values = "{r}, {g}, {b}, {a}".format(r = color.red(), g = color.green(), b = color.blue(), a = alpha)
         self.c3.setStyleSheet("QLabel { background-color: rgba("+values+"); }")
-        p_chunk = self.pantallaActiva.paleta[3].split("(")[1].split(",")
+        p_chunk = self.pantalla[p].paleta[3].split("(")[1].split(",")
         color  = QtGui.QColor(int(p_chunk[0]),int(p_chunk[1]),int(p_chunk[2]))
         values = "{r}, {g}, {b}, {a}".format(r = color.red(), g = color.green(), b = color.blue(), a = alpha)
         self.c4.setStyleSheet("QLabel { background-color: rgba("+values+"); }")
-        p_chunk = self.pantallaActiva.paleta[4].split("(")[1].split(",")
+        p_chunk = self.pantalla[p].paleta[4].split("(")[1].split(",")
         color  = QtGui.QColor(int(p_chunk[0]),int(p_chunk[1]),int(p_chunk[2]))
         values = "{r}, {g}, {b}, {a}".format(r = color.red(), g = color.green(), b = color.blue(), a = alpha)
         self.c5.setStyleSheet("QLabel { background-color: rgba("+values+"); }")
@@ -273,12 +303,13 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         self.numeroDePantallas=numeroDePantallas
         self.pantalla=[]
         self.settingsPantallas=[]
+        self.cargando = []
         for p in range(0,numeroDePantallas):
             self.settingsPantallas.append({'type' : None,'path' : None,'numberOfFrames' : 1,'initialFrame' : 1,'timeSisters' : [],'spaceSisters' : [],'multiplicador': 1})
             self.pantalla.append(Wind())
-            self.ponGeometria(p,11,13)
+            self.ponGeometria(p,0,0)
             self.pantalla[p].show()
-            
+            self.cargando.append(False)
         
         self.pantallaActiva=self.pantalla[0]
         
@@ -322,7 +353,8 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         elPunto = self.pantallaActiva.pos()
         self.settingsPantallas[self.pantallaActivaIndex]['multiplicador']=multiplicador
         largo = 1920 * multiplicador
-        self.pantallaActiva.setGeometry(elPunto.x()+8,13,largo,1080) 
+        self.pantallaActiva.setGeometry(elPunto.x(),0,largo,1080) 
+        self.pantallaActiva.frame.setGeometry(0,0,largo,1080)
         self.pantallaActiva.imageCanvas.setGeometry(0,0,largo,1080) 
         
         if multiplicador>1:
@@ -333,7 +365,22 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         
         self.pantallaActiva.show()
         
-          
+    def extiendePantallaNoActiva(self,p,multiplicador):
+        
+        elPunto = self.pantalla[p].pos()
+        self.settingsPantallas[p]['multiplicador']=multiplicador
+        largo = 1920 * multiplicador
+        self.pantalla[p].setGeometry(elPunto.x(),0,largo,1080) 
+        self.pantalla[p].frame.setGeometry(0,0,largo,1080)
+        self.pantalla[p].imageCanvas.setGeometry(0,0,largo,1080) 
+        
+        if multiplicador>1:
+        
+            for i in range(p+1,p+multiplicador):
+                self.pantalla[i].hide()
+                self.settingsPantallas[i]['type']=None
+        
+        self.pantalla[p].show()      
         
   
        
@@ -346,6 +393,7 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
             self.pantalla[p].show() 
        
     def agregaSerie(self):
+        self.guion = False
         print("aqui agregare una serie de imagenes") 
         imageSerie, _ = QFileDialog.getOpenFileNames(self, 'Selecciona serie de imágenes') 
         
@@ -376,6 +424,7 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         
         
     def agregaCustomImage(self):
+        self.guion = False
         customImage, _ = QFileDialog.getOpenFileName(self, 'Cargar imagen')
         estaImagen = QImage(customImage) 
     
@@ -391,13 +440,14 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         try:   
             if self.pantallaActiva.video_widget:
                 self.pantallaActiva.video_widget.resize(0, 0)
+            
             self.pantallaActiva.imageCanvas.setPixmap(QPixmap.fromImage(estaImagen)) 
-        
+            self.pantallaActiva.view.hide()
         except:
             print("no pude") 
         
     def agregaCustomVideo(self):
-        
+        self.guion = False
         if self.settingsPantallas[self.pantallaActivaIndex]['multiplicador']==None:
             self.settingsPantallas[self.pantallaActivaIndex]['multiplicador']=1
         
@@ -438,19 +488,33 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         
 
     def agregaSerieWeb(self):
+        self.guion = False
         url, ok = QtGui.QInputDialog.getText(self, 'Input Dialog', 
             'url:')
         if ok:
             self.settingsPantallas[self.pantallaActivaIndex]['path'] = str(url)
             self.settingsPantallas[self.pantallaActivaIndex]['type'] = 'serieWeb'
-            
+                        
             self.pantallaActiva.setWebKit(url)
-            self.pantallaActiva.api.setEvent()
+            self.pantallaActiva.api.setEvent(self.pantallaActivaIndex)
+           
+            
             self.pantallaActiva.api.evt_foo += self.ajustaSliders
+            
                   
     
     def agregaWeb(self):
-        pass
+        self.guion = False
+        url, ok = QtGui.QInputDialog.getText(self, 'Input Dialog', 
+            'url:')
+        if ok:
+            
+            self.settingsPantallas[self.pantallaActivaIndex]['path'] = str(url)
+            self.settingsPantallas[self.pantallaActivaIndex]['type'] = 'webPage'
+            self.settingsPantallas[self.pantallaActivaIndex]['numberOfFrames'] = 1 
+            self.pantallaActiva.numberOfFrames = 1           
+            self.pantallaActiva.setSimpleWebKit(url)
+        
         
     def borraTiempo(self):
         self.model.removeRow(self.cualRow)
@@ -459,7 +523,7 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         #proyectoFile= open(proyectoFileName,"r")
         
 
-        with open(proyectoFileName) as data_file:    
+        with open(proyectoFileName) as data_file:
             self.elGuion = json.load(data_file)
         
         
@@ -529,108 +593,163 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
     
     def ponPantallasAsi(self):
         print(str(self.settingsPantallas))
+        self.guion = True
         estabaEnLaPantalla = self.pantallaActivaIndex
+        self.groupsOfTimeSisters = []
+        self.groupsOfSpaceSisters = []
+        self.cargando = [False for i in range(0, self.numeroDePantallas)]
+        for x in range(0,self.numeroDePantallas):
+            if self.settingsPantallas[x]['type']=="serieWeb":
+                self.cargando[x] = True
         for p in range(0,self.numeroDePantallas):
             
-            self.pantallaActiva=self.pantalla[p]   
-            self.pantallaActivaIndex = p
+            ya = False
+            for i in range(0, len(self.groupsOfTimeSisters)):
+                if p in self.groupsOfTimeSisters[i]:
+                    ya = True
+            
+            if not ya and len(self.settingsPantallas[p]['timeSisters']) > 0:
+                lista = self.settingsPantallas[p]['timeSisters'][:]
+                lista.append(p)
+                self.groupsOfTimeSisters.append(lista)
+                
+            ya = False    
+            for i in range(0, len(self.groupsOfSpaceSisters)):
+                if p in self.groupsOfSpaceSisters[i]:
+                    ya = True
+            
+            if not ya and len(self.settingsPantallas[p]['spaceSisters']) > 0:
+                lista = self.settingsPantallas[p]['spaceSisters'][:]
+                lista.append(p)
+                self.groupsOfSpaceSisters.append(lista)
             
             
-            if self.settingsPantallas[self.pantallaActivaIndex]['type']=="imageSerie":
+            if self.settingsPantallas[p]['type']=="imageSerie":
                 print("imageSerie")
-                print(str(self.settingsPantallas[self.pantallaActivaIndex]))
+                print(str(self.settingsPantallas[p]))
                 
                 
                 
-                print("poniendo el slider en "+ str(self.settingsPantallas[self.pantallaActivaIndex]['initialFrame']))
+                print("poniendo el slider en "+ str(self.settingsPantallas[p]['initialFrame']))
                 
                 self.sliderObservados.setVisible(True)
                 self.fechaSlider.setFocus()
                 
-                self.extiendePantalla(self.settingsPantallas[self.pantallaActivaIndex]['multiplicador'])
+                self.extiendePantallaNoActiva(p,self.settingsPantallas[p]['multiplicador'])
 
-                if self.pantallaActiva.video_widget:     
-                    self.pantallaActiva.video_widget.resize(0, 0)
+                if self.pantalla[p].video_widget:     
+                    self.pantalla[p].video_widget.resize(0, 0)
                     
-                print(str(self.settingsPantallas[self.pantallaActivaIndex]))
+                print(str(self.settingsPantallas[p]))
                 #self.fechaSlider.setMaximum(self.settingsPantallas[self.pantallaActivaIndex][0])
-                self.ponFecha(self.settingsPantallas[self.pantallaActivaIndex]['initialFrame'])
+                self.ponFecha(self.settingsPantallas[p]['initialFrame'])
                     
-            elif self.settingsPantallas[self.pantallaActivaIndex]['type']=="customVideo":
-                largo = self.settingsPantallas[self.pantallaActivaIndex]['multiplicador']*1920
-                self.extiendePantalla(self.settingsPantallas[self.pantallaActivaIndex]['multiplicador'])
+            elif self.settingsPantallas[p]['type']=="customVideo":
+                largo = self.settingsPantallas[p]['multiplicador']*1920
+                self.extiendePantallaNoActiva(p,self.settingsPantallas[p]['multiplicador'])
                 
                 
-                self.pantallaActiva.frame.setGeometry(0,0,largo,1080)
+                self.pantalla[p].frame.setGeometry(0,0,largo,1080)
                 
                 self.controlesVideo.setVisible(True)
                 #self.pantallaActiva.mapFrame.setGeometry(0,0,1900,1050)
-                customVideo= self.settingsPantallas[self.pantallaActivaIndex]['path']
+                customVideo= self.settingsPantallas[p]['path']
                 media_src = Phonon.MediaSource(customVideo)
-                self.pantallaActiva.media_obj = Phonon.MediaObject(self.pantallaActiva.frame)
-                self.pantallaActiva.media_obj.setCurrentSource(media_src)
+                self.pantalla[p].media_obj = Phonon.MediaObject(self.pantalla[p].frame)
+                self.pantalla[p].media_obj.setCurrentSource(media_src)
                 
-                self.pantallaActiva.video_widget = Phonon.VideoWidget(self.pantallaActiva.frame)
+                self.pantalla[p].video_widget = Phonon.VideoWidget(self.pantalla[p].frame)
            
-                self.pantallaActiva.video_widget.setGeometry(0,0,largo,1050)
-                Phonon.createPath(self.pantallaActiva.media_obj, self.pantallaActiva.video_widget)
+                self.pantalla[p].video_widget.setGeometry(0,0,largo,1050)
+                Phonon.createPath(self.pantalla[p].media_obj, self.pantalla[p].video_widget)
                 
                 audio_out = Phonon.AudioOutput(Phonon.VideoCategory)
-                Phonon.createPath(self.pantallaActiva.media_obj, audio_out)
+                Phonon.createPath(self.pantalla[p].media_obj, audio_out)
                 
-                self.pantallaActiva.video_widget.show()
-                self.pantallaActiva.media_obj.play()
+                self.pantalla[p].video_widget.show()
+                self.pantalla[p].media_obj.play()
                 
                 
-            elif self.settingsPantallas[self.pantallaActivaIndex]['type']=="customImage":
-                print("aqui se agrega una imagen custom")
-                customImage= self.settingsPantallas[self.pantallaActivaIndex]['path']
+            elif self.settingsPantallas[p]['type']=="customImage":
+                print("aqui se agrega una imagen custom " + self.settingsPantallas[p]['path']+ " en la pantalla " + str(p))
+                customImage= str(self.settingsPantallas[p]['path'])
                 estaImagen = QImage(customImage)
-                multiplicador = self.settingsPantallas[self.pantallaActivaIndex]['multiplicador']
+                multiplicador = self.settingsPantallas[p]['multiplicador']
                 
-                self.extiendePantalla(multiplicador)
+                self.extiendePantallaNoActiva(p,multiplicador)
             
                 
                 try: 
-                    if self.pantallaActiva.video_widget:
-                        self.pantallaActiva.video_widget.resize(0, 0)
-                    self.pantallaActiva.imageCanvas.setPixmap(QPixmap.fromImage(estaImagen)) 
+                    
+                        
+                    if self.pantalla[p].video_widget:
+                        self.pantalla[p].video_widget.resize(0, 0)
+                    self.pantalla[p].imageCanvas.setPixmap(QPixmap.fromImage(estaImagen)) 
+                    self.pantalla[p].view.hide()
                 
                 except:
                     print("no pude") 
                         
-            elif self.settingsPantallas[self.pantallaActivaIndex]['type']=="serieWeb":
-                print("serieWeb")
-                print(str(self.settingsPantallas[self.pantallaActivaIndex]))
-                print("poniendo el slider en "+ str(self.settingsPantallas[self.pantallaActivaIndex]['initialFrame']))
+            
+            elif self.settingsPantallas[p]['type']=="webPage":
                 
-                self.sliderObservados.setVisible(True)
-                self.fechaSlider.setFocus()
-                self.extiendePantalla(self.settingsPantallas[self.pantallaActivaIndex]['multiplicador'])
-                if self.pantallaActiva.video_widget:     
-                    self.pantallaActiva.video_widget.resize(0, 0)   
-                print(str(self.settingsPantallas[self.pantallaActivaIndex]))
-                #self.fechaSlider.setMaximum(self.settingsPantallas[self.pantallaActivaIndex][0])
-                self.pantallaActiva.setWebKit(self.settingsPantallas[self.pantallaActivaIndex]['path'])
-                self.pantallaActiva.api.setEvent()
-                self.pantallaActiva.api.evt_foo += self.ajustaSliders
+                print("webPage")
+                print(str(self.settingsPantallas[p]))
+                self.extiendePantallaNoActiva(p,self.settingsPantallas[p]['multiplicador'])
+                self.settingsPantallas[p]['numberOfFrames'] = 1 
+                self.pantalla[p].numberOfFrames = 1  
+                self.pantalla[p].setSimpleWebKit(self.settingsPantallas[p]['path']) 
+                if self.pantalla[p].video_widget:     
+                    self.pantalla[p].video_widget.resize(0, 0)  
+              
                 
-                self.ponFecha(self.settingsPantallas[self.pantallaActivaIndex]['initialFrame'])
+                
+                #self.ponFecha(self.settingsPantallas[self.pantallaActivaIndex]['initialFrame'])
             else:
                 print("no es nada") 
+                
+        if True in self.cargando:        
+        #elif self.settingsPantallas[p]['type']=="serieWeb":
+                self.ponSiguienteSerieWeb()
+                
+         
+                    
                 
         self.pantallaActiva=self.pantalla[estabaEnLaPantalla]              
         self.pantallaActivaIndex = estabaEnLaPantalla
 
+    def ponSiguienteSerieWeb(self):
+        print("serieWeb")
         
-        
+        if True in self.cargando:
+            p = self.cargando.index(True)
+            
+           
+            print(str(self.settingsPantallas[p]))
+            print("poniendo el slider en "+ str(self.settingsPantallas[p]['initialFrame']))
+            
+            
+            self.sliderObservados.setVisible(True)
+            
+            self.extiendePantallaNoActiva(p,self.settingsPantallas[p]['multiplicador'])
+            self.pantalla[p].setWebKit(self.settingsPantallas[p]['path']) 
+            if self.pantalla[p].video_widget:     
+                self.pantalla[p].video_widget.resize(0, 0)  
+                
+            
+            print(str(self.settingsPantallas[p]))
+            #self.fechaSlider.setMaximum(self.settingsPantallas[self.pantallaActivaIndex][0])
+            
+            
+            self.pantalla[p].api.setEvent(p)
+            
+            self.pantalla[p].api.evt_foo += self.ajustaSliders    
+    
     def guardaPantallasEnArchivo(self):
         
+    
         
-            
-        pixpathFoto = os.path.join(self.CarpetaMapas,"inocuidad/screens30.png")
-        
-        elIcon = QImage(pixpathFoto) 
+        elIcon = QImage("screens30.png") 
 
         
         
@@ -645,7 +764,14 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         
         #self.listView.show()
         
-
+    def ponSatelite(self):
+        self.pantallaActiva.webFrame.evaluateJavaScript("setSatelite();")
+    
+    
+    def ponCalles(self):
+        self.pantallaActiva.webFrame.evaluateJavaScript("setCalles();")
+        
+    
         
 
 
@@ -698,14 +824,15 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
             
               
     def recuperaPantalla(self):
-        print(str(self.settingsPantallas))
+        
         if self.settingsPantallas[self.pantallaActivaIndex]['numberOfFrames'] > 1:##esto es para saber si es una serie,cuando settingsPantallas sea un diccionario bien parido esto se escribira mejor
             #self.quitaSliders()
             self.fpSlider.setValue(self.pantallaActiva.currentFp)
             self.fechaSlider.setValue(self.pantallaActiva.currentFrame)
             self.fechaSlider.setMaximum (self.settingsPantallas[self.pantallaActivaIndex]['numberOfFrames'])
             self.fechaSlider.setMinimum(1) 
-            self.setWebberPaleta()
+            if len(self.pantallaActiva.api.paleta) > 0:
+                self.setWebberPaleta(self.pantallaActivaIndex)
             
             self.sliderObservados.setVisible(True)
             self.fechaSlider.setFocus()
@@ -718,7 +845,7 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
                          
        
     def activaPantalla(self,pantallaIndex):
-        
+        print(str(self.settingsPantallas[pantallaIndex]))
         self.pantallaActiva=self.pantalla[pantallaIndex]
         self.pantallaActivaIndex=pantallaIndex
 
@@ -728,9 +855,10 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
         self.x3.setEnabled(True if (pantallaIndex<self.numeroDePantallas-3) else False)
         self.x4.setEnabled(True if (pantallaIndex<self.numeroDePantallas-4) else False)
         
-        
-            
-        print("pantalla "+str(pantallaIndex)+" activa en el frame " + str(self.pantallaActiva.currentFrame))
+        if self.settingsPantallas[pantallaIndex]['numberOfFrames'] == 1:
+            print("pantalla "+str(pantallaIndex+1)+" activa")
+        else:
+            print("pantalla "+str(pantallaIndex+1)+" activa en el frame " + str(self.pantallaActiva.currentFrame))
         
 
 
@@ -746,8 +874,19 @@ import event
 # slots are then callable from javascript
 class PythonAPI(QObject):
     
-    def setEvent(self):
-        self.evt_foo = event.Event()
+    def setEvent(self,p):
+        if p==0:
+            self.evt_foo = event.Event0()
+        if p==1:
+            self.evt_foo = event.Event1()
+        if p==2:
+            self.evt_foo = event.Event2()
+        if p==3:
+            self.evt_foo = event.Event3()
+        if p==4:
+            self.evt_foo = event.Event4()
+        if p==5:
+            self.evt_foo = event.Event5()
         
     def addSpacialSisters(self, hermanas):
         self.spatial_sisters = []
@@ -762,21 +901,23 @@ class PythonAPI(QObject):
     @Slot(float, float, float, float, float)        
     def setWebberCuts(self, c1,c2,c3,c4,c5):
         self.webberCuts = [c1,c2,c3,c4,c5]
-        print str(self.webberCuts)
+        print (str(self.webberCuts))
     
     @Slot('QStringList')     
     def setPaleta(self, paleta):
-        print str(paleta)
+        #print (str(paleta))
         self.paleta = paleta
     
     @Slot(str)     
     def setBorde(self,borde):
-        print borde
         self.borde = borde
-         
+    
+    @Slot(float)        
+    def setMaximum(self, m):
+        self.maximo = m
+        
     @Slot(int)        
     def setNumberOfFrames(self, n):
-        print str(n)
         self.numberOfFrames = n
         self.evt_foo(self)
             
@@ -819,19 +960,25 @@ class Wind(QMainWindow, ventanitaPro.Ui_MainWindow):
     def __init__(self, parent=None):
         super(Wind, self).__init__(parent)
         self.setupUi(self)
+        self.setWindowFlags(Qt.FramelessWindowHint);
         self.video_widget=None
-        self.view = QtWebKit.QWebView(self)
+        self.view = QWebView(self)
         self.api = PythonAPI()
         self.currentFrame = 1
         self.currentFp = 1.0
         
         
     def setWebKit(self, url):
-        print("estoy intentando abrir una pagina web")
+        #print("estoy intentando abrir una pagina web")
         #self.titleFrame.setVisible(False)
         #self.graphFrame.setVisible(False)
         #self.fotosFrame.setVisible(False)
         #cualUrl = 
+        self.view = QWebView(self)
+        self.view.settings().setAttribute(QWebSettings.WebAttribute.DeveloperExtrasEnabled, True)
+        self.api = PythonAPI()
+        self.currentFrame = 1
+        self.currentFp = 1.0
         self.view.setGeometry(0,0,1920,1080)
         #self.view.load(QtCore.QUrl('http://localhost/~fidel/testMegadapt2.html'))
         self.view.load(QtCore.QUrl(url))
@@ -849,8 +996,15 @@ class Wind(QMainWindow, ventanitaPro.Ui_MainWindow):
 
         self.webFrame.loadFinished.connect(self.setopea)
         #self.pushButton.clicked.connect(self.call_js)
-   
-            
+    def setSimpleWebKit(self, url):
+        self.view = QWebView(self)  
+        self.view.settings().setAttribute(QWebSettings.WebAttribute.DeveloperExtrasEnabled, True)
+        self.view.setGeometry(0,0,1920,1080)  
+        self.view.load(QtCore.QUrl(url))
+        self.view.show()
+        self.view.setFocus()
+        self.show()
+        
     def setopea(self):
         self.webFrame.evaluateJavaScript("setup();")
         
@@ -870,7 +1024,7 @@ class Wind(QMainWindow, ventanitaPro.Ui_MainWindow):
         
 app = QApplication(sys.argv)
 form = Ui_MainWindow()
-form.ensamblaPantallas(5)
+form.ensamblaPantallas(6)
 form.show()
 
 # form2.show()

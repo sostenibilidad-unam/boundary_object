@@ -6,25 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1735</width>
-    <height>1000</height>
+    <width>1900</width>
+    <height>1045</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Tablero de control</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="sliderObservados">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>350</y>
-      <width>631</width>
-      <height>91</height>
+      <x>420</x>
+      <y>590</y>
+      <width>851</width>
+      <height>171</height>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Box</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -32,9 +32,9 @@
     <widget class="QSlider" name="fechaSlider">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>50</y>
-       <width>541</width>
+       <x>40</x>
+       <y>80</y>
+       <width>771</width>
        <height>41</height>
       </rect>
      </property>
@@ -48,295 +48,38 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="guardaPantallas">
-    <property name="geometry">
-     <rect>
-      <x>1350</x>
-      <y>200</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Guarda pantallas</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="guardaGuion">
-    <property name="geometry">
-     <rect>
-      <x>1310</x>
-      <y>810</y>
-      <width>121</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Guarda Guión</string>
-    </property>
-   </widget>
-   <widget class="QListView" name="listView">
-    <property name="geometry">
-     <rect>
-      <x>1330</x>
-      <y>300</y>
-      <width>231</width>
-      <height>481</height>
-     </rect>
-    </property>
-    <property name="dragEnabled">
-     <bool>true</bool>
-    </property>
-    <property name="dragDropOverwriteMode">
-     <bool>false</bool>
-    </property>
-    <property name="dragDropMode">
-     <enum>QAbstractItemView::InternalMove</enum>
-    </property>
-    <property name="alternatingRowColors">
-     <bool>true</bool>
-    </property>
-    <property name="movement">
-     <enum>QListView::Free</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="duplicar">
-    <property name="geometry">
-     <rect>
-      <x>1610</x>
-      <y>390</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Duplicar</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="borrar">
-    <property name="geometry">
-     <rect>
-      <x>1610</x>
-      <y>450</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Borrar</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="cargaGuion">
-    <property name="geometry">
-     <rect>
-      <x>1460</x>
-      <y>810</y>
-      <width>121</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Carga Guión</string>
-    </property>
-   </widget>
-   <widget class="QSplitter" name="splitter_2">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>1571</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-    <widget class="QPushButton" name="P1">
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>91</width>
+       <height>30</height>
+      </rect>
+     </property>
      <property name="font">
       <font>
-       <pointsize>15</pointsize>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
-      <string>P1</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="autoExclusive">
-      <bool>true</bool>
+      <string>Tiempo</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="P2">
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>P2</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="autoExclusive">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="P3">
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>P3</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="autoExclusive">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="P4">
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>P4</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="autoExclusive">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="P5">
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>P5</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="autoExclusive">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="P6">
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>P6</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="autoExclusive">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="addImage">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>190</y>
-      <width>171</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Agregar Imagen</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addVideo">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>220</y>
-      <width>171</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Agregar Video</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="x2">
-    <property name="geometry">
-     <rect>
-      <x>1050</x>
-      <y>200</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x2</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="x3">
-    <property name="geometry">
-     <rect>
-      <x>1090</x>
-      <y>200</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x3</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="x4">
-    <property name="geometry">
-     <rect>
-      <x>1130</x>
-      <y>200</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x4</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="x1">
-    <property name="geometry">
-     <rect>
-      <x>1010</x>
-      <y>200</y>
-      <width>31</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>x1</string>
-    </property>
    </widget>
    <widget class="QFrame" name="controlesVideo">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>660</y>
-      <width>561</width>
-      <height>80</height>
+      <x>860</x>
+      <y>820</y>
+      <width>411</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Box</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
@@ -344,11 +87,16 @@
     <widget class="QPushButton" name="play">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>50</y>
+       <x>20</x>
+       <y>90</y>
        <width>75</width>
-       <height>23</height>
+       <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Play</string>
@@ -357,11 +105,16 @@
     <widget class="QPushButton" name="stop">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>50</y>
+       <x>110</x>
+       <y>90</y>
        <width>75</width>
-       <height>23</height>
+       <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Stop</string>
@@ -370,11 +123,16 @@
     <widget class="QPushButton" name="pause">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>50</y>
+       <x>200</x>
+       <y>90</y>
        <width>75</width>
-       <height>23</height>
+       <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Pause</string>
@@ -383,335 +141,963 @@
     <widget class="QCheckBox" name="loop">
      <property name="geometry">
       <rect>
-       <x>380</x>
-       <y>50</y>
+       <x>300</x>
+       <y>90</y>
        <width>70</width>
-       <height>17</height>
+       <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Loop</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="playGuion">
-    <property name="geometry">
-     <rect>
-      <x>1610</x>
-      <y>540</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Play</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="stopGuion">
-    <property name="geometry">
-     <rect>
-      <x>1610</x>
-      <y>590</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Stop</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addSerie">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>250</y>
-      <width>171</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Agregar Serie</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addSerieWeb">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>280</y>
-      <width>171</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Agregar Serie Web</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addWeb">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>310</y>
-      <width>171</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Agregar Pagina Web</string>
-    </property>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>171</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Control de video</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>170</y>
-      <width>591</width>
-      <height>171</height>
+      <x>420</x>
+      <y>340</y>
+      <width>401</width>
+      <height>191</height>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Box</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <property name="midLineWidth">
+     <number>0</number>
+    </property>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>20</x>
        <y>10</y>
-       <width>131</width>
-       <height>20</height>
+       <width>181</width>
+       <height>30</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Vincular Pantallas</string>
+      <string>Vincular pantallas:</string>
      </property>
     </widget>
     <widget class="QPushButton" name="vincularPorTiempo">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>40</y>
-       <width>171</width>
-       <height>27</height>
+       <y>50</y>
+       <width>170</width>
+       <height>32</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
      <property name="text">
-      <string>vincular por tiempo</string>
+      <string>Por tiempo</string>
      </property>
     </widget>
     <widget class="QPushButton" name="vincularPorEspacio">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>80</y>
-       <width>171</width>
-       <height>27</height>
+       <x>210</x>
+       <y>50</y>
+       <width>170</width>
+       <height>32</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
      <property name="text">
-      <string>vincular por espacio</string>
+      <string>Por espacio</string>
      </property>
     </widget>
     <widget class="QPushButton" name="desvincularTiempo">
      <property name="geometry">
       <rect>
-       <x>420</x>
-       <y>40</y>
-       <width>121</width>
-       <height>27</height>
+       <x>20</x>
+       <y>140</y>
+       <width>170</width>
+       <height>32</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
      <property name="text">
-      <string>desvincular</string>
+      <string>Desvincular</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="hermanasDeTiempo">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>40</y>
-       <width>171</width>
-       <height>27</height>
+       <x>20</x>
+       <y>96</y>
+       <width>170</width>
+       <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
     </widget>
     <widget class="QLineEdit" name="hermanasDeEspacio">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>80</y>
-       <width>171</width>
-       <height>27</height>
+       <x>210</x>
+       <y>96</y>
+       <width>170</width>
+       <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
     </widget>
     <widget class="QPushButton" name="desvincularEspacio">
      <property name="geometry">
       <rect>
-       <x>420</x>
-       <y>80</y>
-       <width>121</width>
-       <height>27</height>
+       <x>210</x>
+       <y>140</y>
+       <width>170</width>
+       <height>32</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
      <property name="text">
-      <string>desvincular</string>
+      <string>Desvincular</string>
      </property>
     </widget>
    </widget>
-   <widget class="QSlider" name="fpSlider">
+   <widget class="QFrame" name="frame_3">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>390</y>
-      <width>281</width>
-      <height>29</height>
+      <x>420</x>
+      <y>130</y>
+      <width>1351</width>
+      <height>171</height>
      </rect>
-    </property>
-    <property name="minimum">
-     <number>10</number>
-    </property>
-    <property name="maximum">
-     <number>20</number>
-    </property>
-    <property name="pageStep">
-     <number>3</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QFrame" name="frame_2">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>445</y>
-      <width>321</width>
-      <height>45</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:lightgray</string>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Box</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="c5">
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>91</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Pantallas</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="x1">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>10</y>
+       <width>40</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>x1</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="x2">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>10</y>
+       <width>40</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>x2</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="x3">
      <property name="geometry">
       <rect>
        <x>250</x>
        <y>10</y>
-       <width>60</width>
-       <height>24</height>
+       <width>40</width>
+       <height>32</height>
       </rect>
      </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
      <property name="text">
-      <string/>
+      <string>x3</string>
      </property>
     </widget>
-    <widget class="QLabel" name="c1">
+    <widget class="QPushButton" name="x4">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>300</x>
        <y>10</y>
-       <width>60</width>
-       <height>24</height>
+       <width>40</width>
+       <height>32</height>
       </rect>
      </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
      <property name="text">
-      <string/>
+      <string>x4</string>
      </property>
     </widget>
-    <widget class="QLabel" name="c2">
+    <widget class="QSplitter" name="splitter_2">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>10</y>
-       <width>60</width>
-       <height>24</height>
+       <x>20</x>
+       <y>60</y>
+       <width>1311</width>
+       <height>91</height>
       </rect>
      </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QPushButton" name="P1">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>P1</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="P2">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>P2</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="P3">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>P3</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="P4">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>P4</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="P5">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>P5</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="P6">
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>P6</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_4">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>340</y>
+      <width>411</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>90</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="text">
-      <string/>
+      <string>Agregar:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="c3">
+    <widget class="QPushButton" name="addWeb">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>10</y>
-       <width>60</width>
-       <height>24</height>
+       <x>20</x>
+       <y>140</y>
+       <width>172</width>
+       <height>32</height>
       </rect>
      </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
      </property>
      <property name="text">
-      <string/>
+      <string>Página web</string>
      </property>
     </widget>
-    <widget class="QLabel" name="c4">
+    <widget class="QPushButton" name="addSerie">
      <property name="geometry">
       <rect>
-       <x>190</x>
-       <y>10</y>
-       <width>60</width>
-       <height>24</height>
+       <x>20</x>
+       <y>50</y>
+       <width>172</width>
+       <height>32</height>
       </rect>
      </property>
-     <property name="autoFillBackground">
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Serie de imágenes</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addSerieWeb">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>96</y>
+       <width>172</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Serie web</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addVideo">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>96</y>
+       <width>172</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Video</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addImage">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>50</y>
+       <width>172</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string> Imagen</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_5">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>340</y>
+      <width>461</width>
+      <height>641</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="guardaPantallas">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>50</y>
+       <width>141</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Guarda 
+pantallas</string>
+     </property>
+    </widget>
+    <widget class="QListView" name="listView">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>261</width>
+       <height>571</height>
+      </rect>
+     </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropOverwriteMode">
       <bool>false</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::InternalMove</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="movement">
+      <enum>QListView::Free</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="duplicar">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>250</y>
+       <width>141</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Duplicar</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="cargaGuion">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>530</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Carga Guión</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="borrar">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>290</y>
+       <width>141</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Borrar</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="playGuion">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>330</y>
+       <width>141</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Play</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="stopGuion">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>370</y>
+       <width>141</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Stop</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Guión</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="guardaGuion">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>580</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Guarda Guión</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_6">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>820</y>
+      <width>401</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QSlider" name="fpSlider">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>351</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>10</number>
+     </property>
+     <property name="maximum">
+      <number>20</number>
+     </property>
+     <property name="pageStep">
+      <number>3</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>95</y>
+       <width>351</width>
+       <height>45</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:lightgray</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="c5">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>10</y>
+        <width>64</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="c1">
+      <property name="geometry">
+       <rect>
+        <x>14</x>
+        <y>10</y>
+        <width>64</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="c2">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>10</y>
+        <width>64</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="c3">
+      <property name="geometry">
+       <rect>
+        <x>142</x>
+        <y>10</y>
+        <width>64</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="c4">
+      <property name="geometry">
+       <rect>
+        <x>206</x>
+        <y>10</y>
+        <width>64</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>121</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Categorías</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>30</y>
+      <width>1351</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>32</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(3, 78, 168);</string>
+    </property>
+    <property name="text">
+     <string>Plataforma de Análisis de Vulnerabilidad en Megalópolis</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_7">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>40</y>
+      <width>231</width>
+      <height>941</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="logos">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>0</y>
+       <width>121</width>
+       <height>941</height>
+      </rect>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
    </widget>
-   <zorder>splitter_2</zorder>
-   <zorder>sliderObservados</zorder>
-   <zorder>guardaPantallas</zorder>
-   <zorder>guardaGuion</zorder>
-   <zorder>listView</zorder>
-   <zorder>duplicar</zorder>
-   <zorder>borrar</zorder>
-   <zorder>cargaGuion</zorder>
-   <zorder>addImage</zorder>
-   <zorder>addVideo</zorder>
-   <zorder>x2</zorder>
-   <zorder>x3</zorder>
-   <zorder>x4</zorder>
-   <zorder>x1</zorder>
-   <zorder>controlesVideo</zorder>
-   <zorder>playGuion</zorder>
-   <zorder>stopGuion</zorder>
-   <zorder>addSerie</zorder>
-   <zorder>addSerieWeb</zorder>
-   <zorder>addWeb</zorder>
-   <zorder>frame</zorder>
-   <zorder>fpSlider</zorder>
-   <zorder>frame_2</zorder>
+   <widget class="QPushButton" name="satellite">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>550</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Satellite</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="calles">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>550</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Calles</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1735</width>
-     <height>25</height>
+     <width>1900</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
