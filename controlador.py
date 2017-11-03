@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'controlador.ui'
 #
-# Created: Mon Mar 27 12:04:54 2017
+# Created: Sun Oct 22 17:34:40 2017
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -439,7 +439,7 @@ class Ui_MainWindow(object):
         self.label_4.setText(QtGui.QApplication.translate("MainWindow", "Guión", None, QtGui.QApplication.UnicodeUTF8))
         self.guardaGuion.setText(QtGui.QApplication.translate("MainWindow", "Guarda Guión", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Categorías", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Plataforma de Análisis de Vulnerabilidad en Megalópolis", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("MainWindow", "Plataforma para visualización en salas de inmersión", None, QtGui.QApplication.UnicodeUTF8))
         self.satellite.setText(QtGui.QApplication.translate("MainWindow", "Satellite", None, QtGui.QApplication.UnicodeUTF8))
         self.calles.setText(QtGui.QApplication.translate("MainWindow", "Calles", None, QtGui.QApplication.UnicodeUTF8))
 

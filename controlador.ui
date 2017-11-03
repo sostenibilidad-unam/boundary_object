@@ -1026,7 +1026,7 @@ pantallas</string>
      <string notr="true">color: rgb(3, 78, 168);</string>
     </property>
     <property name="text">
-     <string>Plataforma de Análisis de Vulnerabilidad en Megalópolis</string>
+     <string>Plataforma para visualización en salas de inmersión</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
