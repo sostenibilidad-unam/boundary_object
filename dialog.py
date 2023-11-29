@@ -1,45 +1,57 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'dialog.ui'
-#
-# Created: Wed Apr  6 12:50:31 2016
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'dialog2.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-from PySide import QtCore, QtGui
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(1900, 1055)
-        self.frame = QtGui.QFrame(Dialog)
-        self.frame.setGeometry(QtCore.QRect(0, 0, 932, 1055))
-        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtGui.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.mapFrame = QtGui.QLabel(self.frame)
-        self.mapFrame.setGeometry(QtCore.QRect(0, 0, 932, 1055))
-        self.mapFrame.setText("")
-        self.mapFrame.setObjectName("mapFrame")
-        self.graphFrame = QtGui.QLabel(Dialog)
-        self.graphFrame.setGeometry(QtCore.QRect(950, 44, 951, 1011))
-        self.graphFrame.setText("")
-        self.graphFrame.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.graphFrame.setObjectName("graphFrame")
-        self.titleFrame = QtGui.QLabel(Dialog)
-        self.titleFrame.setGeometry(QtCore.QRect(951, 0, 951, 40))
-        self.titleFrame.setText("")
-        self.titleFrame.setObjectName("titleFrame")
-        self.fotosFrame = QtGui.QLabel(Dialog)
-        self.fotosFrame.setGeometry(QtCore.QRect(950, 560, 951, 495))
-        self.fotosFrame.setText("")
-        self.fotosFrame.setAlignment(QtCore.Qt.AlignCenter)
-        self.fotosFrame.setObjectName("fotosFrame")
+        if not Dialog.objectName():
+            Dialog.setObjectName(u"Dialog")
+        Dialog.resize(3820, 2135)
+        self.frame = QFrame(Dialog)
+        self.frame.setObjectName(u"frame")
+        self.frame.setGeometry(QRect(0, 0, 932, 1055))
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.mapFrame = QLabel(self.frame)
+        self.mapFrame.setObjectName(u"mapFrame")
+        self.mapFrame.setGeometry(QRect(0, 0, 932, 1055))
+        self.graphFrame = QLabel(Dialog)
+        self.graphFrame.setObjectName(u"graphFrame")
+        self.graphFrame.setGeometry(QRect(950, 44, 951, 1011))
+        self.graphFrame.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.titleFrame = QLabel(Dialog)
+        self.titleFrame.setObjectName(u"titleFrame")
+        self.titleFrame.setGeometry(QRect(951, 0, 951, 40))
+        self.fotosFrame = QLabel(Dialog)
+        self.fotosFrame.setObjectName(u"fotosFrame")
+        self.fotosFrame.setGeometry(QRect(950, 560, 951, 495))
+        self.fotosFrame.setAlignment(Qt.AlignCenter)
+        self.frame.raise_()
+        self.titleFrame.raise_()
+        self.fotosFrame.raise_()
+        self.graphFrame.raise_()
 
         self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+        QMetaObject.connectSlotsByName(Dialog)
+    # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
+        self.mapFrame.setText("")
+        self.graphFrame.setText("")
+        self.titleFrame.setText("")
+        self.fotosFrame.setText("")
+    # retranslateUi
 

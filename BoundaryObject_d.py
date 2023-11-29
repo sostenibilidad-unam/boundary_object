@@ -1,14 +1,22 @@
 # -*- encoding: utf-8 -*-
 from pprint import pprint
-from PySide.QtCore import *
-from PySide.QtCore import Qt
-from PySide.QtGui import *
-from PySide import QtCore, QtGui
-from PySide.QtCore import QObject, QUrl, Slot
+from PySide2.QtCore import *
+from PySide2.QtCore import Qt
+from PySide2.QtGui import *
+from PySide2 import QtCore, QtGui
+from PySide2.QtCore import QObject, QUrl, Slot
 import csv
 import sys
 import json
-from PySide.QtWebKit import *
+ 
+from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QInputDialog, QWidget, QTableWidget,QTableWidgetItem,QPushButton,QListView,QAbstractItemView,QTreeView,QMessageBox
+from PySide2.QtWebEngineWidgets import QWebEngineView
+
+
+
+
+
+# from PySide2.QtWebKit import *
 
 #=SI(IZQUIERDA(E2;1)="9";CONCATENAR("0";E2);E2)
 import controlador
@@ -17,7 +25,7 @@ import os
 from os.path import isfile
 import csv
 import math
-from PySide.phonon import Phonon
+#from PySide2.phonon import Phonon
 import time
 import itertools
 
@@ -489,7 +497,7 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
 
     def agregaSerieWeb(self):
         self.guion = False
-        url, ok = QtGui.QInputDialog.getText(self, 'Input Dialog', 
+        url, ok = QInputDialog.getText(self, 'Input Dialog', 
             'url:')
         if ok:
             self.settingsPantallas[self.pantallaActivaIndex]['path'] = str(url)
@@ -505,7 +513,7 @@ class Ui_MainWindow(QMainWindow, controlador.Ui_MainWindow):
     
     def agregaWeb(self):
         self.guion = False
-        url, ok = QtGui.QInputDialog.getText(self, 'Input Dialog', 
+        url, ok = QInputDialog.getText(self, 'Input Dialog', 
             'url:')
         if ok:
             
@@ -962,7 +970,7 @@ class Wind(QMainWindow, ventanitaPro.Ui_MainWindow):
         self.setupUi(self)
         self.setWindowFlags(Qt.FramelessWindowHint);
         self.video_widget=None
-        self.view = QWebView(self)
+        self.view = QWebEngineView(self)
         self.api = PythonAPI()
         self.currentFrame = 1
         self.currentFp = 1.0
@@ -974,8 +982,8 @@ class Wind(QMainWindow, ventanitaPro.Ui_MainWindow):
         #self.graphFrame.setVisible(False)
         #self.fotosFrame.setVisible(False)
         #cualUrl = 
-        self.view = QWebView(self)
-        self.view.settings().setAttribute(QWebSettings.WebAttribute.DeveloperExtrasEnabled, True)
+        self.view = QWebEngineView(self)
+        #self.view.settings().setAttribute(QWebSettings.WebAttribute.DeveloperExtrasEnabled, True)
         self.api = PythonAPI()
         self.currentFrame = 1
         self.currentFp = 1.0
@@ -997,8 +1005,8 @@ class Wind(QMainWindow, ventanitaPro.Ui_MainWindow):
         self.webFrame.loadFinished.connect(self.setopea)
         #self.pushButton.clicked.connect(self.call_js)
     def setSimpleWebKit(self, url):
-        self.view = QWebView(self)  
-        self.view.settings().setAttribute(QWebSettings.WebAttribute.DeveloperExtrasEnabled, True)
+        self.view = QWebEngineView(self)  
+        #self.view.settings().setAttribute(QWebSettings.WebAttribute.DeveloperExtrasEnabled, True)
         self.view.setGeometry(0,0,1920,1080)  
         self.view.load(QtCore.QUrl(url))
         self.view.show()
@@ -1024,7 +1032,7 @@ class Wind(QMainWindow, ventanitaPro.Ui_MainWindow):
         
 app = QApplication(sys.argv)
 form = Ui_MainWindow()
-form.ensamblaPantallas(6)
+form.ensamblaPantallas(1)
 form.show()
 
 # form2.show()
